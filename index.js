@@ -45,24 +45,24 @@ function generatedID(array) {
 
 // url base de la api que retorna un mensaje simple
 app.get("/", (request, response) => {
-    return "<p>Running with node.js and express</p>"
+    response.send("<p>Running with node.js and express</p>");
 })
 
 // url de la api que retorna todos los contactos
-app.get("/api/phonebook", (request, response)=> {
+app.get("/api/phonebook", (request, response) => {
     morgan(':method :url :status :res[content-length] - :response-time ms')
     response.json(phonebook) // retornamos la lista de contactos transformada en json
 })
 
 
 // url de la api que retorna un contacto segun su ID
-app.get("/api/phonebook/:id", (request, response)=> {
+app.get("/api/phonebook/:id", (request, response) => {
     /*En express todo lo que se coloca en la url, que es un parametro, en este caso el :id, quedara registrado
     dentro de la peticion con la clave "params" lo que hacemos es obtener la id de la url usando request.params.id */
-    const id = Number(request.params.id) 
+    const id = Number(request.params.id)
 
     const contact = phonebook.find(contact => contact.id === id) // buscamos un contacto con esa ID
-    if(contact) // si el contacto existe 
+    if (contact) // si el contacto existe 
     {
         response.status(200).json(contact) // retornamos el contacto con formato json
     }
@@ -76,12 +76,12 @@ app.get("/api/phonebook/:id", (request, response)=> {
 
 
 // url de la api que guarda un nuevo contacto en la lista
-app.post("/api/phonebook", (request, response)=> {
+app.post("/api/phonebook", (request, response) => {
     /* todo los datos enviados en la peticion de tipo POST quedaran almacenados dentro del body, esto se configura
     al usar el express.json de la linea 6, dentro del request.body vendran los datos enviados en la peticion/formulario */
     const body = request.body
 
-    if(!body.name || !body.number) // verificamos si el body viene sin datos
+    if (!body.name || !body.number) // verificamos si el body viene sin datos
     {
         response.status(204).json({
             error: "Missing information"
@@ -100,11 +100,11 @@ app.post("/api/phonebook", (request, response)=> {
 
 
 // url de la api que elimina un registro de la lista
-app.delete("/api/phonebook/:id", (request, response)=> {
+app.delete("/api/phonebook/:id", (request, response) => {
     const id = Number(request.params.id)// sacamos el id 
     const contact = phonebook.find(contact => contact.id === id) // buscamos el contacto
 
-    if(contact) { // si existe
+    if (contact) { // si existe
         phonebook = phonebook.filter(contact => contact.id !== id) // lo eliminamos
         response.status(202).json(contact) // retornamos un codigo de "OK" y retornamos los datos del contacto eliminado
     }
@@ -122,7 +122,7 @@ app.put("/api/phonebook/:id", (request, response) => {
 
     const contact = phonebook.find(contact => contact.id === id) // buscamos el contacto
 
-    if(!contact) // si no existe
+    if (!contact) // si no existe
     {
         response.status(404).json({
             error: `Contact with id ${id} not found`
