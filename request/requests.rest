@@ -1,0 +1,34 @@
+GET http://localhost:3001/
+
+###
+
+GET http://localhost:3001/api/phonebook/
+
+###
+
+GET http://localhost:3001/api/phonebook/1
+
+###
+
+POST http://localhost:3001/api/phonebook/
+content-type: application/json
+
+
+{
+    "name": "Luis Saez",
+    "number": "050-5678"
+}
+
+###
+
+PUT http://localhost:3001/api/phonebook/5
+content-type: application/json
+
+{
+    "name": "Luis Saez",
+    "number": "123456"
+}
+
+###
+
+DELETE http://localhost:3001/api/phonebook/5
